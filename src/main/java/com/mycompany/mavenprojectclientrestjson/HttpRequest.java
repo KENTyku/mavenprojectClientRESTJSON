@@ -13,6 +13,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 import java.io.DataOutputStream;
+import java.nio.charset.StandardCharsets;
 //import org.apache.http.HttpEntity;
 
 /**
@@ -20,40 +21,32 @@ import java.io.DataOutputStream;
  * @author user
  */
 public class HttpRequest {
-    public static void metodGet() throws MalformedURLException, IOException{
-        URL myUrl = new URL("http://pro-java.ru");
-        HttpURLConnection myUrlCon =(HttpURLConnection) myUrl.openConnection();
-
-        // Вывести метод запроса
-
-        System.out.println("Метод запроса: " +
-                            myUrlCon.getRequestMethod());
-
-        // Вывести код ответа
-
-        System.out.println("Ответное сообщение: " +
-                            myUrlCon.getResponseMessage());
-    }
+   HttpRequest(String jtxt1){
+       this.jtxt=jtxt1;
+   }
     // HTTP GET request
-    public static void sendGet() throws Exception {
-
-//        String url = "http://www.google.com/search?q=mkyong";
+    public String sendRequest() throws Exception {
+// HTTP GET request
+//        String url = "https://api.stackexchange.com/2.2/search?order=desc&sort=activity&tagged=smile&site=stackoverflow";
 //
 //        URL obj = new URL(url);
 //        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 //
 //        // optional default is GET
 //        con.setRequestMethod("GET");
+////        con.setRequestProperty("Accept-Language", "ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3");
 //
 //        //add request header
 //        con.setRequestProperty("User-Agent", "Mozilla/5.0");
+////        con.setRequestProperty("Content-Type","text/html; charset=utf-8");
+////        con.setRequestProperty("Content-Type", "text/html; charset=windows-1251', true");
 //
 //        int responseCode = con.getResponseCode();
 //        System.out.println("\nSending 'GET' request to URL : " + url);
 //        System.out.println("Response Code : " + responseCode);
 //
 //        BufferedReader in = new BufferedReader(
-//                new InputStreamReader(con.getInputStream()));
+//                new InputStreamReader(con.getInputStream(),"cp866"));
 //        String inputLine;
 //        StringBuffer response = new StringBuffer();
 //
@@ -63,7 +56,9 @@ public class HttpRequest {
 //        in.close();
 //
 //        //print result
-//        System.out.println(response.toString());
+////        System.out.println(response.toString());
+//        
+//        return response.toString();
 
 // HTTP POST request
         String url = "https://api.stackexchange.com";
@@ -71,7 +66,7 @@ public class HttpRequest {
         HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
 
         //add reuqest header
-        con.setRequestMethod("GET");
+        con.setRequestMethod("POST");
         con.setRequestProperty("User-Agent", "Mozilla/5.0");
         con.setRequestProperty("Accept-Language", "ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3");
         con.setRequestProperty("Content-Type", "application/json");
@@ -84,16 +79,19 @@ public class HttpRequest {
         
         
                 
-        String urlParameters = "{\"order\":\"desc\", \"sort\":\"activity\", \"tagged\":\"smile\", \"site\":\"stackoverflow\"}";
-//       
+//        String urlParameters = "search?order=desc&sort=activity&tagged=smile&site=stackoverflow";
+        String urlParameters = "{\"order\":\"desc\", \"sort\":\"activity\", \"tagged\":\""+this.jtxt+"\", \"site\":\"stackoverflow\"}";
+      byte[] param=urlParameters.getBytes(StandardCharsets.UTF_8);
+      int length = param.length;
 //        String urlParameters = "{\"tagged\":\"smile\"}";
        
         // Send post request
         con.setDoOutput(true);
-        con.setDoInput(true);
+        
         //создание объекта для записы данных
         DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-        wr.writeBytes(urlParameters);
+//        wr.writeBytes(urlParameters);
+        wr.write(param);
         wr.flush();
         wr.close();
 
@@ -101,7 +99,7 @@ public class HttpRequest {
         System.out.println("\nSending 'POST' request to URL :: " + url);
         System.out.println("Post parameters :: " + urlParameters);
         System.out.println("Response Code :: " + responseCode);
-
+//        con.setDoInput(true);
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
         String inputLine;
@@ -113,7 +111,8 @@ public class HttpRequest {
         in.close();
 
         //print result
-        System.out.println(response.toString());
+//        System.out.println(response.toString());
+        return response.toString();
 
     }
 

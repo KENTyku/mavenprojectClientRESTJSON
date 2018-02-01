@@ -12,4 +12,5 @@ package com.mycompany.mavenprojectclientrestjson;
  */
 public class Rest {
     
+    
 }

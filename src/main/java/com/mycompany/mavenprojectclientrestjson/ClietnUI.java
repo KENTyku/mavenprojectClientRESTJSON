@@ -6,13 +6,16 @@
 package com.mycompany.mavenprojectclientrestjson;
 
 import com.mycompany.mavenprojectclientrestjson.GuiActions;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  *
  * @author user
  */
 public class ClietnUI extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form ClietnUI
      */
@@ -83,8 +86,15 @@ public class ClietnUI extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         GuiActions.pushSend();
-        jTextArea1.setText("Hello!\n");
-        jTextArea1.setText(jTextField1.getText());
+//        jTextArea1.setText("Hello!\n");
+        String jtxt1=jTextField1.getText();
+        try {
+//            sendRequest();
+//            new HttpRequest(jtxt1);
+            jTextArea1.setText(new HttpRequest(jtxt1).sendRequest());
+        } catch (Exception ex) {
+            Logger.getLogger(ClietnUI.class.getName()).log(Level.SEVERE, null, ex);
+        }        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
