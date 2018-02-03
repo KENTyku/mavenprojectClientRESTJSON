@@ -6,6 +6,7 @@
 package com.mycompany.mavenprojectclientrestjson;
 
 import com.mycompany.mavenprojectclientrestjson.GuiActions;
+import static com.mycompany.mavenprojectclientrestjson.HttpRequest.sendGET;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -91,7 +92,8 @@ public class ClietnUI extends javax.swing.JFrame {
         try {
 //            sendRequest();
 //            new HttpRequest(jtxt1);
-            jTextArea1.setText(new HttpRequest(jtxt1).sendRequest());
+//            jTextArea1.setText(new HttpRequest(jtxt1).sendRequest());
+            jTextArea1.setText(sendGET());
         } catch (Exception ex) {
             Logger.getLogger(ClietnUI.class.getName()).log(Level.SEVERE, null, ex);
         }        
