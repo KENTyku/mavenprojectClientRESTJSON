@@ -9,11 +9,15 @@ package com.mycompany.mavenprojectclientrestjson;
  *
  * @author user
  */
-public class Client {
-    public static void main(String[] arg){
-        ClientUI window= new ClientUI();
-       window.setVisible(true);
-        
+public class Place {
+    private String name;
+
+    public String getName() {
+        return name;
     }
-    
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
+

@@ -54,7 +54,7 @@ public class HttpRequest {
 
         byte[] data = decompressResponse(inpstr);
         String decompresString=new String(data, "UTF8");
-        System.out.println(decompresString);//для теста выводим в консоль
+//        System.out.println(decompresString);//для теста выводим в консоль
         return decompresString;
    }
    /*
