@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
@@ -24,9 +25,10 @@ public class HttpRequest {
     
 
     // HTTP GET request
-   public static String sendGET() throws Exception { 
+   public static ArrayList<String> sendGET(String tagget) throws Exception { 
     
-        String url = "https://api.stackexchange.com/2.2/search?order=desc&sort=activity&tagged=smile&site=stackoverflow";
+        String url = "https://api.stackexchange.com/2.2/search?order=desc&sort="
+                + "activity&tagged="+tagget+"&site=stackoverflow";
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
@@ -43,7 +45,7 @@ public class HttpRequest {
         con.setRequestProperty("User-Agent", "Mozilla/5.0 Firefox/58.0");
         con.setRequestProperty("X-Requested-With", "XMLHttpRequestt");      
        //выводим получивуюся строку запроса
-        System.out.println("\nSending 'GET' request to URL : " + url); 
+        System.out.println("\nRequest URL: " + url); 
         //выводим код ответа сервиса
         System.out.println("Response Code : " + con.getResponseCode());
         //выводим залоговки ответа
@@ -56,8 +58,9 @@ public class HttpRequest {
         byte[] data = decompressResponse(inpstr);
         String decompresString=new String(data, "UTF8");
 //        System.out.println(decompresString);//для теста выводим в консоль
-        parseJSON(decompresString);
-        return decompresString;
+        con.disconnect();
+        inpstr.close();
+        return parseJSON(decompresString);
    }
    /*
    *метод, разархивирующий входной поток данных
