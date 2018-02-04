@@ -6,6 +6,7 @@
 package com.mycompany.mavenprojectclientrestjson;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  *
@@ -25,30 +26,26 @@ import java.io.IOException;
 
 public class JsonParser {
     
-    public static void parseJSON(String json) {
-
+    public static ArrayList<String> parseJSON(String json) {
+         ArrayList<String> info= new ArrayList();
         //рабочий парсинг 2
         ObjectMapper objectMapper = new ObjectMapper();
         try {
            Item item = objectMapper.readValue(json, Item.class);
            ObjSearch[] arr=item.getItems();
-           System.out.println(arr.length);
-           int i=1;
+           int i=1;          
            for (ObjSearch obS: arr){               
-               System.out.println(i);
-               System.out.println(obS.title);
-               System.out.println("link: "+obS.link);
-               System.out.println(obS.getOwner().display_name);
-               System.out.println("image: "+obS.getOwner().profile_image);
+               info.add("\n"+i);
+               info.add("\n"+obS.title);
+               info.add("\nlink: "+obS.link);
+               info.add("\n"+obS.getOwner().display_name);
+               info.add("\nimage author: "+obS.getOwner().profile_image);
                i++;
-           }
-           System.out.println("TEST="+item.getQuota_max());
+           }           
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-//       return ("\n"+message + " " + world);
-//         return "ttt";//заглушка метода
+        return info;
     }
     
     //класс автора
@@ -167,6 +164,7 @@ public class JsonParser {
         private Owner  owner;// автор
         private String is_answered;// признак ответа (true)
         private String view_count;
+        private String closed_date;
         private String accepted_answer_id;
         private String answer_count;
         private String score;
@@ -175,7 +173,9 @@ public class JsonParser {
         private String last_edit_date;
         private String question_id;
         private String link;// ссылка на найденное содержимое (статья или ответ)
+        private String closed_reason;
         private String title;//заголовок содержимого
+        private String protected_date;
 
         /**
          * @return the owner
@@ -357,6 +357,48 @@ public class JsonParser {
          */
         public void setLast_edit_date(String last_edit_date) {
             this.last_edit_date = last_edit_date;
+        }
+
+        /**
+         * @return the closed_date
+         */
+        public String getClosed_date() {
+            return closed_date;
+        }
+
+        /**
+         * @param closed_date the closed_date to set
+         */
+        public void setClosed_date(String closed_date) {
+            this.closed_date = closed_date;
+        }
+
+        /**
+         * @return the closed_reason
+         */
+        public String getClosed_reason() {
+            return closed_reason;
+        }
+
+        /**
+         * @param closed_reason the closed_reason to set
+         */
+        public void setClosed_reason(String closed_reason) {
+            this.closed_reason = closed_reason;
+        }
+
+        /**
+         * @return the protected_date
+         */
+        public String getProtected_date() {
+            return protected_date;
+        }
+
+        /**
+         * @param protected_date the protected_date to set
+         */
+        public void setProtected_date(String protected_date) {
+            this.protected_date = protected_date;
         }
       
     }
