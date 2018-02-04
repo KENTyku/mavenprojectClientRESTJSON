@@ -4,9 +4,10 @@
  * and open the template in the editor.
  */
 package com.mycompany.mavenprojectclientrestjson;
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONPath;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+//import com.alibaba.fastjson.JSON;
+//import com.alibaba.fastjson.JSONPath;
 import java.util.ArrayList;
 import java.util.List;
 //import org.json.simple.JSONArray;
@@ -42,29 +43,45 @@ public class JsonParser {
 //        Object world = JSONPath.eval(list, "$.place.name");       
 //        System.out.println("\n"+message + " " + world);
         
-        //рабочий парсинг
-        Item item1=JSON.parseObject(json, Item.class);        
-        Item items=(Item)JSONPath.eval(item1, "$.items");
-        String id=(String)JSONPath.eval(item1, "$.items[1].owner.user_id");
-        System.out.println(id);
-//        System.out.println("Size array="+items.arrObjSearch.size());
-        String quota_max1=(String)JSONPath.eval(item1, "$.quota_max");
-        
-//        List<Object> arr=JSON.parseArray(json, Item.class);
-        
-//       List<Object> items2=JSONPath.arrayAdd(item, json, values);
-        
-        
-        System.out.println("TEST="+quota_max1);
+//        //рабочий парсинг
+//        Item item1=JSON.parseObject(json, Item.class);        
+//        Item items=(Item)JSONPath.eval(item1, "$.items");
+//        String id=(String)JSONPath.eval(item1, "$.items[1].owner.user_id");
+//        System.out.println(id);
+////        System.out.println("Size array="+items.arrObjSearch.size());
+//        String quota_max1=(String)JSONPath.eval(item1, "$.quota_max");
+//        
+////        List<Object> arr=JSON.parseArray(json, Item.class);
+//        
+////       List<Object> items2=JSONPath.arrayAdd(item, json, values);
+//        
+//        
+//        System.out.println("TEST="+quota_max1);
+
+        //рабочий парсинг 2
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+           Item item = objectMapper.readValue(json, Item.class);
+           ObjSearch[] arr=item.getItems();
+           System.out.println(arr.length);
+           System.out.println("TEST="+item.getQuota_max());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 //       return ("\n"+message + " " + world);
 //         return "ttt";//заглушка метода
     }
     
     //класс автора
-    public static class Owner{
+    private static class Owner{
+        private String reputation;
         private String user_id;//id автора
+        private String user_type;
+        private String accept_rate;
         private String profile_image;//ссылка на аватар
         private String display_name;//имя автора
+        private String link;
 
         /**
          * @return the user_id
@@ -107,15 +124,79 @@ public class JsonParser {
         public void setDisplay_name(String display_name) {
             this.display_name = display_name;
         }
+
+        /**
+         * @return the reputation
+         */
+        public String getReputation() {
+            return reputation;
+        }
+
+        /**
+         * @param reputation the reputation to set
+         */
+        public void setReputation(String reputation) {
+            this.reputation = reputation;
+        }
+
+        /**
+         * @return the user_type
+         */
+        public String getUser_type() {
+            return user_type;
+        }
+
+        /**
+         * @param user_type the user_type to set
+         */
+        public void setUser_type(String user_type) {
+            this.user_type = user_type;
+        }
+
+        /**
+         * @return the link
+         */
+        public String getLink() {
+            return link;
+        }
+
+        /**
+         * @param link the link to set
+         */
+        public void setLink(String link) {
+            this.link = link;
+        }
+
+        /**
+         * @return the accept_rate
+         */
+        public String getAccept_rate() {
+            return accept_rate;
+        }
+
+        /**
+         * @param accept_rate the accept_rate to set
+         */
+        public void setAccept_rate(String accept_rate) {
+            this.accept_rate = accept_rate;
+        }
         
     }
     
     //класс описывающий найденные объекты
-    
+        
     private static class ObjSearch{
+        private String[]  tags;
         private Owner  owner;// автор
         private String is_answered;// признак ответа (true)
+        private String view_count;
         private String accepted_answer_id;
+        private String answer_count;
+        private String score;
+        private String last_activity_date;
+        private String creation_date;
+        private String last_edit_date;
+        private String question_id;
         private String link;// ссылка на найденное содержимое (статья или ответ)
         private String title;//заголовок содержимого
 
@@ -160,12 +241,157 @@ public class JsonParser {
         public String getTitle() {
             return title;
         }
+
+        /**
+         * @return the tags
+         */
+        public String[] getTags() {
+            return tags;
+        }
+
+        /**
+         * @param tags the tags to set
+         */
+        public void setTags(String[] tags) {
+            this.tags=tags;
+        }
+
+        /**
+         * @param is_answered the is_answered to set
+         */
+        public void setIs_answered(String is_answered) {
+            this.is_answered = is_answered;
+        }
+
+        /**
+         * @return the view_count
+         */
+        public String getView_count() {
+            return view_count;
+        }
+
+        /**
+         * @param view_count the view_count to set
+         */
+        public void setView_count(String view_count) {
+            this.view_count = view_count;
+        }
+
+        /**
+         * @param accepted_answer_id the accepted_answer_id to set
+         */
+        public void setAccepted_answer_id(String accepted_answer_id) {
+            this.accepted_answer_id = accepted_answer_id;
+        }
+
+        /**
+         * @return the answer_count
+         */
+        public String getAnswer_count() {
+            return answer_count;
+        }
+
+        /**
+         * @param answer_count the answer_count to set
+         */
+        public void setAnswer_count(String answer_count) {
+            this.answer_count = answer_count;
+        }
+
+        /**
+         * @return the score
+         */
+        public String getScore() {
+            return score;
+        }
+
+        /**
+         * @param score the score to set
+         */
+        public void setScore(String score) {
+            this.score = score;
+        }
+
+        /**
+         * @return the last_activity_date
+         */
+        public String getLast_activity_date() {
+            return last_activity_date;
+        }
+
+        /**
+         * @param last_activity_date the last_activity_date to set
+         */
+        public void setLast_activity_date(String last_activity_date) {
+            this.last_activity_date = last_activity_date;
+        }
+
+        /**
+         * @return the creation_date
+         */
+        public String getCreation_date() {
+            return creation_date;
+        }
+
+        /**
+         * @param creation_date the creation_date to set
+         */
+        public void setCreation_date(String creation_date) {
+            this.creation_date = creation_date;
+        }
+
+        /**
+         * @return the question_id
+         */
+        public String getQuestion_id() {
+            return question_id;
+        }
+
+        /**
+         * @param question_id the question_id to set
+         */
+        public void setQuestion_id(String question_id) {
+            this.question_id = question_id;
+        }
+
+        /**
+         * @param link the link to set
+         */
+        public void setLink(String link) {
+            this.link = link;
+        }
+
+        /**
+         * @param title the title to set
+         */
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        /**
+         * @return the last_edit_date
+         */
+        public String getLast_edit_date() {
+            return last_edit_date;
+        }
+
+        /**
+         * @param last_edit_date the last_edit_date to set
+         */
+        public void setLast_edit_date(String last_edit_date) {
+            this.last_edit_date = last_edit_date;
+        }
+      
     }
     
     // класс описывающий объект содержащий массив найденных объектов
     private static class Item {        
-        private ArrayList<ObjSearch> arrObjSearch;        
+        private ObjSearch[] items;        
+        private String has_more;
         private String quota_max;
+        private String quota_remaining;
+        
+        
         
         /**
          * @return the quota_max
@@ -179,21 +405,50 @@ public class JsonParser {
          */
         public void setQuota_max(String quota_max) {
             this.quota_max = quota_max;
-        }   
+        }           
 
         /**
-         * @return the arrObjSearch
+         * @return the has_more
          */
-        public ArrayList<ObjSearch> getArrObjSearch() {
-            return arrObjSearch;
+        public String getHas_more() {
+            return has_more;
         }
 
         /**
-         * @param arrObjSearch the arrObjSearch to set
+         * @param has_more the has_more to set
          */
-        public void setArrObjSearch(ArrayList<ObjSearch> arrObjSearch) {
-            this.arrObjSearch = arrObjSearch;
+        public void setHas_more(String has_more) {
+            this.has_more = has_more;
         }
-                
+
+        /**
+         * @return the quota_remaining
+         */
+        public String getQuota_remaining() {
+            return quota_remaining;
+        }
+
+        /**
+         * @param quota_remaining the quota_remaining to set
+         */
+        public void setQuota_remaining(String quota_remaining) {
+            this.quota_remaining = quota_remaining;
+        }
+
+        /**
+         * @return the items
+         */
+        public ObjSearch[] getItems() {
+            return items;
+        }
+
+        /**
+         * @param items the items to set
+         */
+        public void setItems(ObjSearch[] items) {
+            this.items = items;
+        }
+
+            
     }    
 }
