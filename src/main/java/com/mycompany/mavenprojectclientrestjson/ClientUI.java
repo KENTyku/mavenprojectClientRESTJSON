@@ -15,7 +15,8 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author user
+ * @author Yuri Tveritin
+ * @version 1.0
  */
 public class ClientUI extends javax.swing.JFrame {
     

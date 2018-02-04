@@ -7,7 +7,8 @@ package com.mycompany.mavenprojectclientrestjson;
 
 /**
  *
- * @author user
+ * @author Yuri Tveritin
+ * @version 1.0
  */
 public class Client {
     public static void main(String[] arg){

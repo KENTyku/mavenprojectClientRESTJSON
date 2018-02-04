@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /**
  *
  * @author Yuri Tveritin
- *
+ * @version 1.0
  * выполняет парсинг по тегам 
  * "accepted_answer_id" - id ответа 
  * "link": - ссылка на ответ

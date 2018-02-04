@@ -20,6 +20,7 @@ import java.util.zip.GZIPInputStream;
 /**
  *класс отправляет запросы GET на веб сервис, используя JSON
  * @author Yuri Tveritin
+ * @version 1.0
  */
 public class HttpRequest {
     
@@ -53,7 +54,7 @@ public class HttpRequest {
 //        System.out.println("Head==="+h.toString());
         
        //обрабатываем сжатый ответ сервиса
-        InputStream inpstr=con.getInputStream();//           
+        InputStream inpstr=con.getInputStream();           
 
         byte[] data = decompressResponse(inpstr);
         String decompresString=new String(data, "UTF8");

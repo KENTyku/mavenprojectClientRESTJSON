@@ -8,6 +8,7 @@ package com.mycompany.mavenprojectclientrestjson;
 /**
  * 
  * @author Yuri Tveritin
+ * @version 1.0
  * 
  *  хранит в отображении  Map пары ключ значение(используется для хранения значений,
  * передаваемых в строку запроса; для хранения значений, передаваемых 
