@@ -5,9 +5,10 @@
  */
 package com.mycompany.mavenprojectclientrestjson;
 
-import com.mycompany.mavenprojectclientrestjson.GuiActions;
+
 import static com.mycompany.mavenprojectclientrestjson.HttpRequest.sendGET;
 import static com.mycompany.mavenprojectclientrestjson.JsonParser.parseJSON;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -87,15 +88,13 @@ public class ClientUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        GuiActions.pushSend();
-//        jTextArea1.setText("Hello!\n");
-        String jtxt1=jTextField1.getText();
+        String tagget=jTextField1.getText();
+        jTextArea1.setText(null);
         try {
-//            sendRequest();
-//            new HttpRequest(jtxt1);
-//            jTextArea1.setText(new HttpRequest(jtxt1).sendRequest());
-            jTextArea1.setText(sendGET());
-//            jTextArea1.setText(parseJSON());
+            ArrayList<String> info=sendGET(tagget);
+            for(String infoline:info){
+               jTextArea1.append(infoline); 
+            }        
         } catch (Exception ex) {
             Logger.getLogger(ClientUI.class.getName()).log(Level.SEVERE, null, ex);
         }        
