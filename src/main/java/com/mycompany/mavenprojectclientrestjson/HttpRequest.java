@@ -6,6 +6,7 @@
 package com.mycompany.mavenprojectclientrestjson;
 
 
+import static com.mycompany.mavenprojectclientrestjson.JsonParser.parseJSON;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -47,7 +48,7 @@ public class HttpRequest {
         System.out.println("Response Code : " + con.getResponseCode());
         //выводим залоговки ответа
         Map <String, List<String>> h=con.getHeaderFields();
-        System.out.println("Head==="+h.toString());
+//        System.out.println("Head==="+h.toString());
         
        //обрабатываем сжатый ответ сервиса
         InputStream inpstr=con.getInputStream();//           
@@ -55,6 +56,7 @@ public class HttpRequest {
         byte[] data = decompressResponse(inpstr);
         String decompresString=new String(data, "UTF8");
 //        System.out.println(decompresString);//для теста выводим в консоль
+        parseJSON(decompresString);
         return decompresString;
    }
    /*

@@ -6,17 +6,10 @@
 package com.mycompany.mavenprojectclientrestjson;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-//import com.alibaba.fastjson.JSON;
-//import com.alibaba.fastjson.JSONPath;
-import java.util.ArrayList;
-import java.util.List;
-//import org.json.simple.JSONArray;
-//import org.json.simple.JSONObject;
-//import org.json.simple.JSONValue;
 
 /**
  *
- * @author user
+ * @author Yuri Tveritin
  *
  * выполняет парсинг по тегам 
  * "accepted_answer_id" - id ответа 
@@ -29,34 +22,10 @@ import java.util.List;
  * 
  * 
  **/
-//package org.json; 
-
 
 public class JsonParser {
     
     public static void parseJSON(String json) {
-//        //тестовый парсинг
-//        String jsonString = "{\"message\": \"Hi\", \"place\":{\"name\":\"World!\"}}";
-//        System.out.println(jsonString);
-//        Human list = JSON.parseObject(jsonString, Human.class);        
-//        Object message = JSONPath.eval(list, "$.message");
-//        Object world = JSONPath.eval(list, "$.place.name");       
-//        System.out.println("\n"+message + " " + world);
-        
-//        //рабочий парсинг
-//        Item item1=JSON.parseObject(json, Item.class);        
-//        Item items=(Item)JSONPath.eval(item1, "$.items");
-//        String id=(String)JSONPath.eval(item1, "$.items[1].owner.user_id");
-//        System.out.println(id);
-////        System.out.println("Size array="+items.arrObjSearch.size());
-//        String quota_max1=(String)JSONPath.eval(item1, "$.quota_max");
-//        
-////        List<Object> arr=JSON.parseArray(json, Item.class);
-//        
-////       List<Object> items2=JSONPath.arrayAdd(item, json, values);
-//        
-//        
-//        System.out.println("TEST="+quota_max1);
 
         //рабочий парсинг 2
         ObjectMapper objectMapper = new ObjectMapper();
@@ -64,6 +33,15 @@ public class JsonParser {
            Item item = objectMapper.readValue(json, Item.class);
            ObjSearch[] arr=item.getItems();
            System.out.println(arr.length);
+           int i=1;
+           for (ObjSearch obS: arr){               
+               System.out.println(i);
+               System.out.println(obS.title);
+               System.out.println("link: "+obS.link);
+               System.out.println(obS.getOwner().display_name);
+               System.out.println("image: "+obS.getOwner().profile_image);
+               i++;
+           }
            System.out.println("TEST="+item.getQuota_max());
         } catch (IOException e) {
             e.printStackTrace();
@@ -183,8 +161,7 @@ public class JsonParser {
         
     }
     
-    //класс описывающий найденные объекты
-        
+    //класс описывающий найденные объекты        
     private static class ObjSearch{
         private String[]  tags;
         private Owner  owner;// автор

@@ -95,7 +95,7 @@ public class ClientUI extends javax.swing.JFrame {
 //            new HttpRequest(jtxt1);
 //            jTextArea1.setText(new HttpRequest(jtxt1).sendRequest());
             jTextArea1.setText(sendGET());
-            jTextArea1.setText(parseJSON());
+//            jTextArea1.setText(parseJSON());
         } catch (Exception ex) {
             Logger.getLogger(ClientUI.class.getName()).log(Level.SEVERE, null, ex);
         }        
