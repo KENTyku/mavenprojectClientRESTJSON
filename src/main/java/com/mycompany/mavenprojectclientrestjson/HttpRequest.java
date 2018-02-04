@@ -45,13 +45,13 @@ public class HttpRequest {
         con.setRequestProperty("Referer", "https://api.stackexchange.com/docs/search");
         con.setRequestProperty("User-Agent", "Mozilla/5.0 Firefox/58.0");
         con.setRequestProperty("X-Requested-With", "XMLHttpRequestt");      
-       //выводим получивуюся строку запроса
-        System.out.println("\nRequest URL: " + url); 
-        //выводим код ответа сервиса
-        System.out.println("Response Code : " + con.getResponseCode());
-        //выводим залоговки ответа
-        Map <String, List<String>> h=con.getHeaderFields();
-//        System.out.println("Head==="+h.toString());
+//       //выводим получивуюся строку запроса
+//        System.out.println("\nRequest URL: " + url); 
+//        //выводим код ответа сервиса
+//        System.out.println("Response Code : " + con.getResponseCode());
+//        //выводим залоговки ответа
+//        Map <String, List<String>> h=con.getHeaderFields();
+//        System.out.println("Head: "+h.toString());
         
        //обрабатываем сжатый ответ сервиса
         InputStream inpstr=con.getInputStream();           
