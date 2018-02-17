@@ -5,8 +5,7 @@
  */
 package com.mycompany.mavenprojectclientrestjson;
 
-import static com.mycompany.mavenprojectclientrestjson.HttpRequest.sendGET;
-import static com.mycompany.mavenprojectclientrestjson.JsonParser.parseJSON;
+
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -43,7 +42,7 @@ public class ClientUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Seach");
+        jButton1.setText("Search");
         jButton1.setName(""); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,10 +88,12 @@ public class ClientUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String tagget=jTextField1.getText();
+        String tagget=jTextField1.getText();//читаем из текстового поля
         jTextArea1.setText(null);
-        try {
-            ArrayList<String> info=sendGET(tagget);
+        Maker makeSearch=new Maker(tagget);//отправляем в обработчик тег
+        try {            
+            ArrayList<String> info=makeSearch.work();//выполняем обработчик
+            //отображаем в текстовом поле результат
             for(String infoline:info){
                jTextArea1.append(infoline); 
             }        
