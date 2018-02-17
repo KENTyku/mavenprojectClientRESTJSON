@@ -5,9 +5,9 @@
  */
 package com.mycompany.mavenprojectclientrestjson;
 
-
 import static com.mycompany.mavenprojectclientrestjson.HttpRequest.sendGET;
 import static com.mycompany.mavenprojectclientrestjson.JsonParser.parseJSON;
+
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;

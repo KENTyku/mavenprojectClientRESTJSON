@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 package com.mycompany.mavenprojectclientrestjson;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
