@@ -5,6 +5,8 @@
  */
 package com.mycompany.mavenprojectclientrestjson;
 
+import static com.mycompany.mavenprojectclientrestjson.Gui.createGUI;
+
 /**
  *
  * @author Yuri Tveritin
@@ -12,8 +14,10 @@ package com.mycompany.mavenprojectclientrestjson;
  */
 public class Client {
     public static void main(String[] arg){
-        ClientUI window= new ClientUI();
-       window.setVisible(true);
+//        ClientUI window= new ClientUI();
+//       window.setVisible(true);
+//         Gui window=new Gui();
+         createGUI();
         
     }
     
