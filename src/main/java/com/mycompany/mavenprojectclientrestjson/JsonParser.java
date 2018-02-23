@@ -1,49 +1,36 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Use and copying for commercial purposes 
+ * only with the author's permission
  */
 package com.mycompany.mavenprojectclientrestjson;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  *
  * @author Yuri Tveritin
  * @version 1.0
- * выполняет парсинг по тегам 
- * "accepted_answer_id" - id ответа 
- * "link": - ссылка на ответ
- * "title" - заголовок ответа
- * по тегам
- * "user_id":
- * "profile_image":  - картинка пользователя
- * "display_name" - имя пользователя
  * 
+ * выполняет парсинг по тегам 
+ * десериализует массив объектов ObjSearch * 
  * 
  **/
 
 public class JsonParser {
-    
+    /**
+     * 
+     * @param json ответ GET запроса
+     * @return   дессериализованный массив объектов ObjSearch
+     * @throws IOException  проблемы при восстановлении объектов
+     */
     public static ObjSearch[] parseJSON(String json) throws IOException {
-         ArrayList<String> info= new ArrayList();
-        //рабочий парсинг 2
+               
         ObjectMapper objectMapper = new ObjectMapper();
-        
-           Item item = objectMapper.readValue(json, Item.class);
-           ObjSearch[] arr=item.getItems();
-//           int i=1;          
-//           for (ObjSearch obS: arr){               
-//               info.add("\n"+i);
-//               info.add("\n"+obS.title);
-//               info.add("\nlink: "+obS.link);
-//               info.add("\n"+obS.getOwner().display_name);
-//               info.add("\nimage author: "+obS.getOwner().profile_image);
-//               i++;
-        
+        Item item = objectMapper.readValue(json, Item.class);//десериалиазация
+        //объекта класса Item
+        ObjSearch[] arr=item.getItems();
         return arr;
     }
     

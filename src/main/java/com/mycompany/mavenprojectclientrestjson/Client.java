@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Use and copying for commercial purposes 
+ * only with the author's permission
  */
 package com.mycompany.mavenprojectclientrestjson;
 
@@ -14,8 +13,6 @@ package com.mycompany.mavenprojectclientrestjson;
  */
 public class Client {
     public static void main(String[] arg){
-//        ClientUI window= new ClientUI();
-//       window.setVisible(true);
          Gui window=new Gui();
          window.createGUI();
         

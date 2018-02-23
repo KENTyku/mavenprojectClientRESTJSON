@@ -1,9 +1,6 @@
 /*
  * Use and copying for commercial purposes 
- * only with the author's permission
- *
- * @author Yuri Tveritin
- * @version 1.0
+ * only with the author's permission 
  */
 package com.mycompany.mavenprojectclientrestjson;
 
@@ -51,8 +48,8 @@ public class HttpRequest {
     /**
      * URL request
      * 
-     * @param tagget 
-     * @return 
+     * @param tagget тег,передаваемый в GET запрос 
+     * @return  строка GET запроса
      */
     public String initURL(String tagget){
         return "https://api.stackexchange.com/2.2/search?order=desc&sort="
@@ -62,8 +59,9 @@ public class HttpRequest {
     /**
      * HTTP GET request
      * 
-     * @param url 
-     * @return 
+     * @param url строка запроса
+     * @return массив объектов ObjSearch
+     * @exception Exception проблемы с http соединением
      */
     public JsonParser.ObjSearch[] sendGET(String url) throws Exception {          
         URL obj = new URL(url);
@@ -85,9 +83,12 @@ public class HttpRequest {
         inpstr.close();
         return parseJSON(decompresString);
    }
-   /*
-   *метод, разархивирующий входной поток данных
-   */
+   /**
+    * 
+    * метод, разархивирующий входной поток данных
+    * @param is поток данных
+    * @return байтовый массив данных
+    */
    private byte[] decompressResponse(InputStream is) throws IOException {
         ByteArrayOutputStream baos = null;
         try {
