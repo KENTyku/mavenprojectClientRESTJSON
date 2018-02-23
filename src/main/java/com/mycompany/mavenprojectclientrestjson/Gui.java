@@ -112,7 +112,7 @@ public class Gui extends JFrame {
                             i++;
                         }        
                     } catch (Exception ex) {
-                        Logger.getLogger(ClientUI.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
                     }        
                 }
             }
