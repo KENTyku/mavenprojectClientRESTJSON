@@ -28,8 +28,13 @@ import javax.swing.JTextField;
  * @author user
  */
 public class Gui extends JFrame {
-    public static void createGUI(){ 
-        JFrame frame = new JFrame("Поиск статей и ответов");
+    JFrame frame;
+    JPanel jpSearch;
+    JPanel jpList;
+    JScrollPane jsp_jpList;
+    JScrollPane jspJTA;
+    public void createGUI(){ 
+        frame = new JFrame("Поиск статей и ответов");
         frame.setBounds(0, 0, 400, 700);//положение и размер созадваемого фрейма
         JButton btnSearch=new JButton("Search");       
         JTextField jtfSearch=new JTextField("smile");
@@ -37,12 +42,11 @@ public class Gui extends JFrame {
 //        jTextArea.setRows(8);
 //        jTextArea.setPreferredSize(new Dimension (250,200));
         
-        JLabel jl=new JLabel("TestTest");
-        JLabel jl1=new JLabel("TestTest2");
-        JPanel jpSearch=new JPanel();//панель поиска
-        JPanel jpList=new JPanel();//панель под вывод результатов
-        JScrollPane jsp_jpList=new JScrollPane(jpList);//прокрутка панели результатов
-        JScrollPane jspJTA=new JScrollPane(jTextArea);        
+        
+        jpSearch=new JPanel();//панель поиска
+        jpList=new JPanel();//панель под вывод результатов
+        jsp_jpList=new JScrollPane(jpList);//прокрутка панели результатов
+        jspJTA=new JScrollPane(jTextArea);        
 //        jpList.setLayout(new BoxLayout(jpList, BoxLayout.Y_AXIS));//компоновщик 
         //размещающий объекты по вертикали на панели резултатов
         
@@ -52,45 +56,60 @@ public class Gui extends JFrame {
         
         frame.setLayout(new BorderLayout());
         frame.add(jpSearch, BorderLayout.NORTH);
-        frame.add(jpList, BorderLayout.CENTER);
+        frame.add(jsp_jpList, BorderLayout.CENTER);
 //        frame.setPreferredSize(new Dimension(250, 200)); 
 
         jpList.setLayout(new BoxLayout(jpList, BoxLayout.Y_AXIS));
         jpSearch.add(jtfSearch);
         jpSearch.add(btnSearch);
-        jpList.add(jspJTA);        
-        jpList.add(jl);
-        jpList.add(jl1);
+//        jpList.add(jspJTA);        
+   
         
         frame.setVisible(true);
         
         btnSearch.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                jpList.removeAll();
                         String tagget=jtfSearch.getText();//читаем из текстового поля
                 if (!tagget.equals("tag name")&!tagget.equals("")) {
-                    List jlabels=new ArrayList(); 
-                    jTextArea.setText(null);
+//                    List jlabels=new ArrayList(); 
+//                    jTextArea.setText(null);
                     Maker makeSearch=new Maker(tagget);//отправляем в обработчик тег
                     try {            
-                        ArrayList<String> info=makeSearch.work();//выполняем обработчик
+                        JsonParser.ObjSearch[] info=makeSearch.work();//выполняем обработчик
                         //отображаем в текстовом поле результат
-                        for(String infoline:info){                    
-                            jTextArea.append(infoline);
-                            JLabel jlabel=new JLabel();
-                            jlabel.setIcon(new javax.swing.JLabel() {
+                        int i=1;
+                        
+                        for(JsonParser.ObjSearch infoItem:info){
+                            JLabel jlNum=new JLabel(i+")."); 
+                            JLabel jlTitle=new JLabel(infoItem.getTitle());
+                            JLabel jlLink=new JLabel(infoItem.getLink());
+                            JLabel jlAvatar=new JLabel();
+                            JLabel jlNameOwner=new JLabel(infoItem.getOwner().getDisplay_name());
+                            
+                            
+                            String url=infoItem.getOwner().getProfile_image();//ссылка на аватар//                                                
+                            jlAvatar.setIcon(new javax.swing.JLabel() {
                                 public javax.swing.Icon getIcon() {
                                     try {
                                         return new javax.swing.ImageIcon(
-                                            new java.net.URL("https://www.gravatar.com/avatar/955390e344937bdd0e363ad2ab470545?s=128&d=identicon&r=PG&f=1")
+                                            new java.net.URL(url)
                                         );
                                     } catch (java.net.MalformedURLException e) {
                                     }
                                     return null;
                                 }
                             }.getIcon());
-                            jlabels.add(jlabel);
+//                            jlabels.add(jlAvatar);
+//                            jpList.add(jlAvatar, BoxLayout.Y_AXIS);
+                            jpList.add(jlNum);
+                            jpList.add(jlTitle);
+                            jpList.add(jlLink);
+                            jpList.add(jlAvatar);
+                            jpList.add(jlNameOwner);
                             jpList.repaint();
                             jsp_jpList.revalidate();
+                            i++;
                         }        
                     } catch (Exception ex) {
                         Logger.getLogger(ClientUI.class.getName()).log(Level.SEVERE, null, ex);
