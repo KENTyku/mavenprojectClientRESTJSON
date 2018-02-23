@@ -65,7 +65,7 @@ public class HttpRequest {
      * @param url 
      * @return 
      */
-    public ArrayList<String> sendGET(String url) throws Exception {          
+    public JsonParser.ObjSearch[] sendGET(String url) throws Exception {          
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         
