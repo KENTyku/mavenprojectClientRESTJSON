@@ -5,7 +5,7 @@
  */
 package com.mycompany.mavenprojectclientrestjson;
 
-import static com.mycompany.mavenprojectclientrestjson.Gui.createGUI;
+
 
 /**
  *
@@ -16,8 +16,8 @@ public class Client {
     public static void main(String[] arg){
 //        ClientUI window= new ClientUI();
 //       window.setVisible(true);
-//         Gui window=new Gui();
-         createGUI();
+         Gui window=new Gui();
+         window.createGUI();
         
     }
     
