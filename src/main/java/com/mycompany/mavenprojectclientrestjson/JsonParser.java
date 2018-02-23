@@ -28,30 +28,27 @@ import java.util.ArrayList;
 
 public class JsonParser {
     
-    public static ArrayList<String> parseJSON(String json) {
+    public static ObjSearch[] parseJSON(String json) throws IOException {
          ArrayList<String> info= new ArrayList();
         //рабочий парсинг 2
         ObjectMapper objectMapper = new ObjectMapper();
-        try {
+        
            Item item = objectMapper.readValue(json, Item.class);
            ObjSearch[] arr=item.getItems();
-           int i=1;          
-           for (ObjSearch obS: arr){               
-               info.add("\n"+i);
-               info.add("\n"+obS.title);
-               info.add("\nlink: "+obS.link);
-               info.add("\n"+obS.getOwner().display_name);
-               info.add("\nimage author: "+obS.getOwner().profile_image);
-               i++;
-           }           
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return info;
+//           int i=1;          
+//           for (ObjSearch obS: arr){               
+//               info.add("\n"+i);
+//               info.add("\n"+obS.title);
+//               info.add("\nlink: "+obS.link);
+//               info.add("\n"+obS.getOwner().display_name);
+//               info.add("\nimage author: "+obS.getOwner().profile_image);
+//               i++;
+        
+        return arr;
     }
     
     //класс автора
-    private static class Owner{
+    public static class Owner{
         private String reputation;
         private String user_id;//id автора
         private String user_type;
@@ -161,7 +158,7 @@ public class JsonParser {
     }
     
     //класс описывающий найденные объекты        
-    private static class ObjSearch{
+    static class ObjSearch{
         private String[]  tags;
         private Owner  owner;// автор
         private String is_answered;// признак ответа (true)
