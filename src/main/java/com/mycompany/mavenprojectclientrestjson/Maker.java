@@ -26,7 +26,7 @@ public class Maker {
      * @return
      * @throws Exception 
      */
-    ArrayList<String> work() throws Exception{        
+    JsonParser.ObjSearch[] work() throws Exception{        
         HttpRequest httpr= new HttpRequest();
         //формируем строку http запроса на основании введенного тега
         String url=httpr.initURL(this.tagget);
