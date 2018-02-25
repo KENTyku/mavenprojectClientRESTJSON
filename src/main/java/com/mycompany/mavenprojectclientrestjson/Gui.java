@@ -5,14 +5,18 @@
 package com.mycompany.mavenprojectclientrestjson;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import static java.awt.Component.LEFT_ALIGNMENT;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,6 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 /**
  * Класс создания формы
@@ -32,12 +37,14 @@ public class Gui extends JFrame {
     JFrame frame;
     JPanel jpSearch;//панель поиска
     JPanel jpList;//панель под вывод результатов
-    JScrollPane jsp_jpList;//прокрутка панели результатов    
+    JScrollPane jsp_jpList;//прокрутка панели результатов 
+    Border border=BorderFactory.createLineBorder(Color.BLACK, 1);
 
     /**
      * Create Form
      */
     public void createGUI(){ 
+        
         //инициализация компонентов
         frame = new JFrame("Поиск статей и ответов");        
         JButton btnSearch=new JButton("Search");       
@@ -45,7 +52,8 @@ public class Gui extends JFrame {
         jpSearch=new JPanel();
         jpList=new JPanel();
         jsp_jpList=new JScrollPane(jpList);
-
+        
+        
         //установка настроек компонентов
         frame.setBounds(0, 0, 400, 700);//положение и размер созадваемого фрейма
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);    
@@ -53,16 +61,16 @@ public class Gui extends JFrame {
         //света
         jpList.setLayout(new BoxLayout(jpList, BoxLayout.Y_AXIS));//компоновщик 
         //размещающий объекты по вертикали на панели резултатов
-//        jpList.applyComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-        jpList.setAlignmentX(RIGHT_ALIGNMENT);
-        //добавление элементов на форму
+
+        
+        //добавление элементов на форму      
         frame.add(jpSearch, BorderLayout.NORTH);
         frame.add(jsp_jpList, BorderLayout.CENTER);
 
+        
         //добавление объектов на панель       
         jpSearch.add(jtfSearch);
-        jpSearch.add(btnSearch); 
-           
+        jpSearch.add(btnSearch);            
         frame.setVisible(true);
         
         //обработка события нажатия кнопки btnSearch
@@ -81,17 +89,26 @@ public class Gui extends JFrame {
                         
                         for(JsonParser.ObjSearch infoItem:info){
                             //инициализируем объекты формы для элемента infoItem
-                            JLabel jlNum=new JLabel(count+"."); 
+                            JLabel jlNum=new JLabel(count+".");
+                            jlNum.setAlignmentX(LEFT_ALIGNMENT);
+                            jlNum.setBorder(border);
                             JLabel jlTitle=new JLabel(infoItem.getTitle());
+                            jlTitle.setAlignmentX(LEFT_ALIGNMENT);
+                            jlTitle.setBorder(border);                                                 
                             String text=ParseHTML.parseHtml(infoItem.getLink());
                             JTextArea jtaLink=new JTextArea(text);
+                            jtaLink.setAlignmentX(LEFT_ALIGNMENT);
+                            jtaLink.setMaximumSize(new Dimension(350,1000));
                             jtaLink.setLineWrap(true);
                             jtaLink.setWrapStyleWord(true);
                             jtaLink.setEditable(false);
                             JLabel jlAvatar=new JLabel();
-//                            jlAvatar.setAlignmentX(RIGHT_ALIGNMENT);
+                            jlAvatar.setBorder(border);
+                            jlAvatar.setAlignmentX(LEFT_ALIGNMENT);                          
                             JLabel jlNameOwner=new JLabel(infoItem.getOwner().getDisplay_name());
-                            
+                            jlNameOwner.setBorder(border);
+                            jlNameOwner.setAlignmentX(LEFT_ALIGNMENT);
+                                                       
                             //ссылка на аватар
                             String url=infoItem.getOwner().getProfile_image();
                             //Установка иконки на jlAvatar
@@ -111,8 +128,7 @@ public class Gui extends JFrame {
                             jpList.add(jlTitle);
                             jpList.add(jtaLink);
                             jpList.add(jlAvatar);
-                            jpList.add(jlNameOwner);
-                            
+                            jpList.add(jlNameOwner);                                           
                             jpList.repaint();//перерисовка панели
                             jsp_jpList.revalidate();//обновление скролинга
                             count++;
