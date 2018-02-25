@@ -5,6 +5,7 @@
 package com.mycompany.mavenprojectclientrestjson;
 
 import java.awt.BorderLayout;
+import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -52,6 +53,8 @@ public class Gui extends JFrame {
         //света
         jpList.setLayout(new BoxLayout(jpList, BoxLayout.Y_AXIS));//компоновщик 
         //размещающий объекты по вертикали на панели резултатов
+//        jpList.applyComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+        jpList.setAlignmentX(RIGHT_ALIGNMENT);
         //добавление элементов на форму
         frame.add(jpSearch, BorderLayout.NORTH);
         frame.add(jsp_jpList, BorderLayout.CENTER);
@@ -80,8 +83,13 @@ public class Gui extends JFrame {
                             //инициализируем объекты формы для элемента infoItem
                             JLabel jlNum=new JLabel(count+"."); 
                             JLabel jlTitle=new JLabel(infoItem.getTitle());
-                            JLabel jlLink=new JLabel(infoItem.getLink());
+                            String text=ParseHTML.parseHtml(infoItem.getLink());
+                            JTextArea jtaLink=new JTextArea(text);
+                            jtaLink.setLineWrap(true);
+                            jtaLink.setWrapStyleWord(true);
+                            jtaLink.setEditable(false);
                             JLabel jlAvatar=new JLabel();
+//                            jlAvatar.setAlignmentX(RIGHT_ALIGNMENT);
                             JLabel jlNameOwner=new JLabel(infoItem.getOwner().getDisplay_name());
                             
                             //ссылка на аватар
@@ -101,7 +109,7 @@ public class Gui extends JFrame {
                             //добавление объектов на панель
                             jpList.add(jlNum);
                             jpList.add(jlTitle);
-                            jpList.add(jlLink);
+                            jpList.add(jtaLink);
                             jpList.add(jlAvatar);
                             jpList.add(jlNameOwner);
                             
