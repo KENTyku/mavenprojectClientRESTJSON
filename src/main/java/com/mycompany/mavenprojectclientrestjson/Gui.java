@@ -19,12 +19,14 @@ import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
 import javax.swing.border.Border;
 
 /**
@@ -52,10 +54,11 @@ public class Gui extends JFrame {
         jpSearch=new JPanel();
         jpList=new JPanel();
         jsp_jpList=new JScrollPane(jpList);
+        jsp_jpList.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_NEVER);
         
         
         //установка настроек компонентов
-        frame.setBounds(0, 0, 400, 700);//положение и размер созадваемого фрейма
+        frame.setBounds(0, 0, 550, 700);//положение и размер созадваемого фрейма
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);    
         frame.setLayout(new BorderLayout());//установка компоновщика по сторонам
         //света
@@ -91,17 +94,27 @@ public class Gui extends JFrame {
                             //инициализируем объекты формы для элемента infoItem
                             JLabel jlNum=new JLabel(count+".");
                             jlNum.setAlignmentX(LEFT_ALIGNMENT);
-                            jlNum.setBorder(border);
-                            JLabel jlTitle=new JLabel(infoItem.getTitle());
+//                            jlNum.setBorder(border);
+                            JLabel jlTitle=new JLabel("<html>"+infoItem.getTitle());
                             jlTitle.setAlignmentX(LEFT_ALIGNMENT);
-                            jlTitle.setBorder(border);                                                 
+                            jlTitle.setBorder(border);
+                            jlTitle.setMaximumSize(new Dimension(400,1000));
                             String text=ParseHTML.parseHtml(infoItem.getLink());
-                            JTextArea jtaLink=new JTextArea(text);
-                            jtaLink.setAlignmentX(LEFT_ALIGNMENT);
-                            jtaLink.setMaximumSize(new Dimension(350,1000));
-                            jtaLink.setLineWrap(true);
-                            jtaLink.setWrapStyleWord(true);
-                            jtaLink.setEditable(false);
+//                            System.out.println(infoItem.getLink());
+//                            JTextArea jtaLink=new JTextArea(text);
+////                            System.out.println(text);
+//                            jtaLink.setAlignmentX(LEFT_ALIGNMENT);
+//                            jtaLink.setMaximumSize(new Dimension(350,1000));
+//                            jtaLink.setLineWrap(true);
+//                            jtaLink.setWrapStyleWord(true);
+//                            jtaLink.setEditable(false);
+                            JEditorPane jepHtmlTextArea=new JEditorPane();
+                            jepHtmlTextArea.setEditable(false);
+                            jepHtmlTextArea.setContentType("text/html");
+                            jepHtmlTextArea.setText(text);
+                            jepHtmlTextArea.setAlignmentX(LEFT_ALIGNMENT);
+                            jepHtmlTextArea.setMaximumSize(new Dimension(500,1000));
+                            
                             JLabel jlAvatar=new JLabel();
                             jlAvatar.setBorder(border);
                             jlAvatar.setAlignmentX(LEFT_ALIGNMENT);                          
@@ -126,7 +139,8 @@ public class Gui extends JFrame {
                             //добавление объектов на панель
                             jpList.add(jlNum);
                             jpList.add(jlTitle);
-                            jpList.add(jtaLink);
+//                            jpList.add(jtaLink);
+                            jpList.add(jepHtmlTextArea);
                             jpList.add(jlAvatar);
                             jpList.add(jlNameOwner);                                           
                             jpList.repaint();//перерисовка панели
