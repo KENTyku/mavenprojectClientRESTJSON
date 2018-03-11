@@ -29,62 +29,40 @@ public class ParseHTML {
     public static String parseHtml(String pageUrl) {
         String text = "";         
         String content=new Downloader().download(pageUrl);
-        if(content.contains("<td class=\"postcell\">")){
-            int indStart=content.indexOf("<td class=\"postcell\">");
-            String subString=content.substring(indStart);
-            indStart=subString.indexOf("<td class=\"postcell\">");
-            int indEnd=subString.indexOf("</td>");
-            subString=subString.substring(indStart, indEnd+5);
-            String[] split=subString.split("<p>");
-            for(int i=1; i<split.length; i++){
-//                System.out.println(split[i]);
-                int ind=split[i].indexOf("</p>");
-//                System.out.println(ind);
-                if (ind!=-1){
-                    text=text+split[i].substring(0, ind)+"\n";
+        //ищем кусок кода с постом
+        if(content.contains("<div class=\"post-text\" itemprop=\"text\">")){//если содержит строку
+            int indStart=content.indexOf("<div class=\"post-text\" itemprop=\""
+                    + "text\">");//устанавливаем начальный индекс для подстроки
+            String subString=content.substring(indStart);//выделяем новую 
+            int indEnd=subString.indexOf("</div>")+6;//определяем конечный индекс
+            subString=subString.substring(0, indEnd);//выделяем полезную подстроку поста  
+            //ищем в посте вставки кода для их дальнейшего разбора
+            String[] codeArea=subString.split("<pre><code>");
+            String[] codeAreaTemp=new String[codeArea.length];//временный массив
+            //обрабатываем найденные вставки кода
+            for (int i=1;i<codeArea.length;i++){//пропускаем первый кусок i=0
+                int indEn=codeArea[i].indexOf("</code></pre>");
+                codeAreaTemp[i]=codeArea[i].substring(0, indEn);//полезная подстрока кода                               
+                String[] splitCode=codeAreaTemp[i].split("\n");
+                
+                //разбиваем на подстроки и заменяем перенос \n на <br/> для 
+                //вставки в html блок
+                String textCode="";
+                for (int j=0; j<splitCode.length;j++){                   
+                    textCode=textCode+splitCode[j]+"<br/>";
                 }
-                                
+                codeAreaTemp[i]=textCode; 
+                //собираем вставку кода
+                codeArea[i]=codeAreaTemp[i]+codeArea[i].substring(indEn+13);                
             }
-            
-//            text="<html> slkjsldjf lskjdflsjd slkdjflsjdf sldjfljdf"
-//                    + "slkdjlskjd slkdjflsdjflsdj lskdjflsdjf slkdfj"
-//                    + "sldkjflskjdflsjf lskjdflsdkjf lskdjflskjdf lskjdflsjk"
-//                    + "sldkjflskjdflsjf lskjdflsdkjf lskdjflskjdf lskjdflsjk"
-//                    + "sldkjflskjdflsjf lskjdflsdkjf lskdjflskjdf lskjdflsjk"
-//                    + "sldkjflskjdflsjf lskjdflsdkjf lskdjflskjdf lskjdflsjk"
-//                    + "sldkjflskjdflsjf lskjdflsdkjf lskdjflskjdf lskjdflsjk"
-//                    + "sldkjflskjdflsjf lskjdflsdkjf lskdjflskjdf lskjdflsjk"
-//                    + "sldkjflskjdflsjf lskjdflsdkjf lskdjflskjdf lskjdflsjk"
-//                    + "sldkjflskjdflsjf lskjdflsdkjf lskdjflskjdf lskjdflsjk"
-//                    + "sldkjflskjdflsjf lskjdflsdkjf lskdjflskjdf lskjdflsjk"
-//                    + "sldkjflskjdflsjf lskjdflsdkjf lskdjflskjdf lskjdflsjk"
-//                    + "sldkjflskjdflsjf lskjdflsdkjf lskdjflskjdf lskjdflsjk"
-//                    
-//                    + "</html>";
-            
-//            System.out.println(text);                    
+            //собираем строку полностью
+            subString="";
+            for (int i=0;i<codeArea.length;i++){
+                subString=subString+codeArea[i];
+            }
+            text=subString;
+                   
         } 
     return text;
     }    
 }
-
-//                    String[] splitContent = content.split("\n");
-                    
-//                    for (String line:splitContent) {  
-//                        if(line.contains("twitter:description")){
-//                            int indStart=line.indexOf("content");
-//                            String text=line.substring(indStart);
-////                            String text=line.substring(0, 0)
-////                            String[] splitLine=line.split(" ");
-////                            for(String piece :splitLine){
-////                                if(piece.equals(keyword)) rank++;                   
-//                            }
-//                        }
-           
-                   
-//                }                
-//                System.out.println(personId+" "+pageId+" "+rank);  
-//                this.personsPageRank.put(personId + " " + pageId, rank);                
-//            }
-//        }
-//        System.out.println("Подсчет рейтинга закончен");
